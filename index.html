@@ -1,241 +1,289 @@
-
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STELLIVE TCG 룰북</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&family=Cinzel:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Cinzel:wght@600&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--p50:#EEEDFE;--p100:#CECBF6;--p200:#AFA9EC;--p400:#7F77DD;--p600:#534AB7;--p800:#3C3489;--t50:#E1F5EE;--t100:#9FE1CB;--t400:#1D9E75;--t600:#0F6E56;--pk50:#FBEAF0;--pk100:#F4C0D1;--pk400:#D4537E;--a50:#FAEEDA;--a400:#EF9F27}
-body{font-family:'Noto Sans KR',sans-serif;background:transparent;color:var(--color-text-primary);padding:1rem 0}
-.logo{text-align:center;margin-bottom:1.5rem}
-.logo h1{font-family:'Cinzel',serif;font-size:22px;font-weight:600;letter-spacing:2px;color:var(--p600)}
-.logo p{font-size:13px;color:var(--color-text-secondary);margin-top:4px}
-.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:12px}
-.tab{padding:6px 14px;border-radius:20px;border:0.5px solid var(--color-border-tertiary);font-size:13px;font-weight:500;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all .2s}
-.tab.active{background:var(--p50);border-color:var(--p200);color:var(--p800)}
-.tab:hover:not(.active){background:var(--color-background-secondary);color:var(--color-text-primary)}
-.section{display:none}
-.section.active{display:block}
-.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:1rem}
-.card-title{font-size:14px;font-weight:500;color:var(--p800);margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.deck-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
-.deck-item{border-radius:var(--border-radius-md);padding:12px;text-align:center}
-.deck-item.unit{background:var(--p50);border:0.5px solid var(--p200)}
-.deck-item.support{background:var(--t50);border:0.5px solid var(--t100)}
-.deck-item.pastel{background:var(--pk50);border:0.5px solid var(--pk100)}
-.deck-num{font-size:28px;font-weight:700;line-height:1}
-.deck-label{font-size:11px;margin-top:4px;font-weight:500}
-.deck-item.unit .deck-num{color:var(--p800)}.deck-item.unit .deck-label{color:var(--p600)}
-.deck-item.support .deck-num{color:var(--t600)}.deck-item.support .deck-label{color:var(--t600)}
-.deck-item.pastel .deck-num{color:var(--pk400)}.deck-item.pastel .deck-label{color:var(--pk400)}
-.deck-total{margin-top:10px;text-align:center;font-size:13px;color:var(--color-text-secondary);padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
-.deck-total span{font-weight:700;color:var(--color-text-primary)}
-.rule-note{font-size:12px;color:var(--color-text-secondary);margin-top:8px;padding:8px 10px;background:var(--a50);border-left:2px solid var(--a400);border-radius:0 var(--border-radius-md) var(--border-radius-md) 0}
-.steps{counter-reset:step;list-style:none}
-.steps li{counter-increment:step;display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:14px;line-height:1.6}
-.steps li:last-child{border-bottom:none}
-.step-num{min-width:26px;height:26px;border-radius:50%;background:var(--p50);border:0.5px solid var(--p200);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--p800);flex-shrink:0}
-.sub-note{margin-top:6px;font-size:12px;color:var(--color-text-secondary);padding:6px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
-.glossary-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.gcard{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 12px;cursor:pointer;transition:.15s}
-.gcard:hover{background:var(--p50);border-color:var(--p200)}
-.gcard.open{background:var(--p50);border-color:var(--p200)}
-.gcard-name{font-size:13px;font-weight:500;color:var(--color-text-primary);display:flex;justify-content:space-between;align-items:center}
-.gcard-desc{display:none;font-size:12px;color:var(--color-text-secondary);margin-top:6px;line-height:1.6}
-.gcard.open .gcard-desc{display:block}
-.arrow{font-size:12px;color:var(--color-text-secondary);transition:.2s}
-.gcard.open .arrow{transform:rotate(180deg);display:inline-block}
-.turn-steps{display:flex;flex-direction:column;gap:8px}
-.turn-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden;cursor:pointer}
-.turn-header{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--color-background-secondary);transition:.15s}
-.turn-card.open .turn-header{background:var(--p50)}
-.turn-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--p100);color:var(--p800)}
-.turn-title{font-size:14px;font-weight:500;flex:1}
-.turn-body{display:none;padding:12px 14px;font-size:13px;line-height:1.7;background:var(--color-background-primary);color:var(--color-text-secondary)}
-.turn-card.open .turn-body{display:block}
-.turn-body ul{padding-left:16px;margin-top:4px}
-.turn-body li{margin-bottom:4px}
-.win-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.win-card{border-radius:var(--border-radius-lg);padding:16px;border:0.5px solid}
-.win-card.w1{background:var(--p50);border-color:var(--p200)}
-.win-card.w2{background:var(--t50);border-color:var(--t100)}
-.win-num{font-size:28px;font-weight:700;margin-bottom:8px}
-.win-card.w1 .win-num{color:var(--p800)}
-.win-card.w2 .win-num{color:var(--t600)}
-.win-label{font-size:13px;line-height:1.5;font-weight:500}
-.win-card.w1 .win-label{color:var(--p600)}
-.win-card.w2 .win-label{color:var(--t600)}
-.win-desc{font-size:12px;margin-top:6px;line-height:1.5;color:var(--color-text-secondary)}
-.battle-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
-.battle-rule{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;font-size:12px;line-height:1.6}
-.battle-rule strong{font-size:12px;font-weight:500;display:block;margin-bottom:4px;color:var(--color-text-primary)}
+:root{
+  --pu50:#EEEDFE;--pu100:#CECBF6;--pu200:#AFA9EC;--pu400:#7F77DD;--pu600:#534AB7;--pu800:#3C3489;
+  --te50:#E1F5EE;--te100:#9FE1CB;--te400:#1D9E75;--te600:#0F6E56;
+  --am50:#FAEEDA;--am400:#EF9F27;
+  --pk50:#FBEAF0;--pk100:#F4C0D1;--pk400:#D4537E;
+  --bg:#ffffff;--bg2:#f7f7f8;--text:#1a1a1a;--text2:#6b6b6b;--border:rgba(0,0,0,0.12);
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#1e1e1e;--bg2:#2a2a2a;--text:#e8e8e8;--text2:#999;--border:rgba(255,255,255,0.12)}
+  :root{--pu50:#26215C;--pu100:#3C3489;--pu200:#534AB7;--pu800:#CECBF6;--pu600:#AFA9EC;--pu400:#7F77DD}
+  :root{--te50:#04342C;--te100:#085041;--te600:#9FE1CB}
+  :root{--am50:#412402;--am400:#EF9F27}
+  :root{--pk50:#4B1528;--pk100:#72243E;--pk400:#ED93B1}
+}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);padding:2rem 1rem;max-width:720px;margin:0 auto;line-height:1.6}
+.hd{text-align:center;margin-bottom:2rem}
+.hd-title{font-family:'Cinzel',serif;font-size:22px;font-weight:600;letter-spacing:3px;color:var(--pu800)}
+.hd-sub{font-size:12px;color:var(--text2);margin-top:5px;letter-spacing:1px}
+.hd-line{width:60px;height:1px;background:var(--pu200);margin:10px auto 0}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem;padding-bottom:12px;border-bottom:0.5px solid var(--border)}
+.tab{padding:5px 14px;border-radius:20px;border:0.5px solid var(--border);font-size:13px;font-weight:500;cursor:pointer;background:transparent;color:var(--text2);transition:all .18s;font-family:inherit}
+.tab.on{background:var(--pu50);border-color:var(--pu200);color:var(--pu800)}
+.tab:hover:not(.on){background:var(--bg2);color:var(--text)}
+.sec{display:none}.sec.on{display:block}
+.card{background:var(--bg);border:0.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem}
+.card-ttl{font-size:13px;font-weight:500;color:var(--pu800);margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.card-ttl i{font-size:16px;color:var(--pu400)}
+.deck-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.dk{border-radius:8px;padding:14px 10px;text-align:center}
+.dk.a{background:var(--pu50);border:0.5px solid var(--pu200)}
+.dk.b{background:var(--te50);border:0.5px solid var(--te100)}
+.dk.c{background:var(--pk50);border:0.5px solid var(--pk100)}
+.dk-n{font-size:32px;font-weight:500;line-height:1}
+.dk.a .dk-n{color:var(--pu800)}.dk.b .dk-n{color:var(--te600)}.dk.c .dk-n{color:var(--pk400)}
+.dk-l{font-size:11px;font-weight:500;margin-top:5px;line-height:1.4}
+.dk.a .dk-l{color:var(--pu600)}.dk.b .dk-l{color:var(--te600)}.dk.c .dk-l{color:var(--pk400)}
+.deck-foot{font-size:12px;color:var(--text2);background:var(--bg2);border-radius:8px;padding:8px 12px;text-align:center}
+.deck-foot b{color:var(--text);font-weight:500}
+.note{font-size:12px;color:var(--text2);margin-top:8px;padding:7px 10px;background:var(--am50);border-left:2px solid var(--am400);border-radius:0 8px 8px 0;line-height:1.6}
+.steps{list-style:none}
+.step-item{display:flex;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--border);font-size:13px;line-height:1.65}
+.step-item:last-child{border-bottom:none}
+.step-n{min-width:24px;height:24px;border-radius:50%;background:var(--pu50);border:0.5px solid var(--pu200);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--pu800);flex-shrink:0}
+.sub{margin-top:6px;font-size:12px;color:var(--text2);padding:6px 10px;background:var(--bg2);border-radius:8px}
+.gls-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gc{background:var(--bg);border:0.5px solid var(--border);border-radius:8px;padding:10px 12px;cursor:pointer;transition:.15s}
+.gc:hover{background:var(--pu50);border-color:var(--pu200)}
+.gc.op{background:var(--pu50);border-color:var(--pu200)}
+.gc-name{font-size:13px;font-weight:500;display:flex;justify-content:space-between;align-items:center;color:var(--text)}
+.gc-arr{font-size:11px;color:var(--text2);transition:.2s;display:inline-block}
+.gc.op .gc-arr{transform:rotate(180deg)}
+.gc-desc{display:none;font-size:12px;color:var(--text2);margin-top:7px;line-height:1.65}
+.gc.op .gc-desc{display:block}
+.turn-list{display:flex;flex-direction:column;gap:7px}
+.tc{border:0.5px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer}
+.tc-hd{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg2);transition:.15s}
+.tc.op .tc-hd{background:var(--pu50)}
+.tc-badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:10px;background:var(--pu100);color:var(--pu800)}
+.tc-title{font-size:13px;font-weight:500;flex:1;color:var(--text)}
+.tc-arr{font-size:11px;color:var(--text2);transition:.2s;display:inline-block}
+.tc.op .tc-arr{transform:rotate(180deg)}
+.tc-body{display:none;padding:11px 14px;font-size:13px;line-height:1.7;background:var(--bg);color:var(--text2)}
+.tc.op .tc-body{display:block}
+.tc-body ul{padding-left:14px;margin-top:4px}
+.tc-body li{margin-bottom:5px}
+.tc-body b{font-weight:500;color:var(--text)}
+.warn{margin-top:8px;font-size:12px;padding:6px 10px;background:var(--am50);border-left:2px solid var(--am400);border-radius:0 8px 8px 0;color:var(--text2);line-height:1.6}
+.draw-visual{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.draw-pill{background:var(--pu50);border:0.5px solid var(--pu200);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:500;color:var(--pu800)}
+.draw-mid{font-size:12px;color:var(--text2)}
+.bt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bt{background:var(--bg2);border-radius:8px;padding:11px 13px;font-size:12px;line-height:1.65;color:var(--text2)}
+.bt b{font-size:12px;font-weight:500;color:var(--text);display:block;margin-bottom:4px}
+.win-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.win{border-radius:12px;padding:16px;border:0.5px solid}
+.win.w1{background:var(--pu50);border-color:var(--pu200)}
+.win.w2{background:var(--te50);border-color:var(--te100)}
+.win-n{font-size:26px;font-weight:500;margin-bottom:8px}
+.win.w1 .win-n{color:var(--pu800)}.win.w2 .win-n{color:var(--te600)}
+.win-l{font-size:13px;font-weight:500;line-height:1.5}
+.win.w1 .win-l{color:var(--pu600)}.win.w2 .win-l{color:var(--te600)}
+.win-d{font-size:12px;margin-top:7px;line-height:1.6;color:var(--text2)}
+@media(max-width:480px){
+  .deck-row{grid-template-columns:repeat(3,1fr)}
+  .gls-grid{grid-template-columns:1fr}
+  .bt-grid{grid-template-columns:1fr}
+  .win-row{grid-template-columns:1fr}
+}
 </style>
-<h2 class="sr-only">스텔라이브 TCG 인터랙티브 룰북</h2>
+</head>
+<body>
 
-<div class="logo">
-  <h1>✦ STELLIVE TCG ✦</h1>
-  <p>공식 룰북 (가칭)</p>
+<h1 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">스텔라이브 TCG 인터랙티브 룰북</h1>
+
+<div class="hd">
+  <div class="hd-title">✦ STELLIVE TCG ✦</div>
+  <div class="hd-sub">공식 룰북 (가칭)</div>
+  <div class="hd-line"></div>
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="showTab('deck')">덱 구성</div>
-  <div class="tab" onclick="showTab('setup')">게임 준비</div>
-  <div class="tab" onclick="showTab('terms')">용어 설명</div>
-  <div class="tab" onclick="showTab('turn')">턴 진행</div>
-  <div class="tab" onclick="showTab('battle')">배틀</div>
-  <div class="tab" onclick="showTab('win')">승리 조건</div>
+  <button class="tab on" onclick="go('deck',this)">덱 구성</button>
+  <button class="tab" onclick="go('setup',this)">게임 준비</button>
+  <button class="tab" onclick="go('terms',this)">필드 &amp; 용어</button>
+  <button class="tab" onclick="go('turn',this)">턴 진행</button>
+  <button class="tab" onclick="go('battle',this)">배틀</button>
+  <button class="tab" onclick="go('win',this)">승리 조건</button>
 </div>
 
-<div id="deck" class="section active">
+<!-- 덱 구성 -->
+<div id="deck" class="sec on">
   <div class="card">
-    <div class="card-title">덱 구성 — 총 31장</div>
-    <div class="deck-grid">
-      <div class="deck-item unit">
-        <div class="deck-num">9</div>
-        <div class="deck-label">유닛 카드<br>스텔라 멤버</div>
-      </div>
-      <div class="deck-item support">
-        <div class="deck-num">21</div>
-        <div class="deck-label">서포트 카드<br>효과 카드</div>
-      </div>
-      <div class="deck-item pastel">
-        <div class="deck-num">1</div>
-        <div class="deck-label">파스텔 카드<br>팬덤</div>
-      </div>
+    <div class="card-ttl">덱 구성 — 총 31장</div>
+    <div class="deck-row">
+      <div class="dk a"><div class="dk-n">9</div><div class="dk-l">유닛 카드<br>스텔라 멤버</div></div>
+      <div class="dk b"><div class="dk-n">21</div><div class="dk-l">서포트 카드<br>효과 카드</div></div>
+      <div class="dk c"><div class="dk-n">1</div><div class="dk-l">파스텔 카드<br>팬덤</div></div>
     </div>
-    <div class="deck-total">합계 <span>31장</span> · 동일 카드 최대 <span>3장</span></div>
-    <div class="rule-note">유닛 카드는 멤버 혼용이 불가합니다. 같은 그룹의 멤버 카드만 사용하세요.</div>
+    <div class="deck-foot">합계 <b>31장</b> · 동일 카드명 최대 <b>3장</b> · 각 카드 수는 원하는 대로 조정 가능</div>
+    <div class="note">유닛 카드는 멤버 혼용 불가. 같은 그룹의 멤버 카드만 사용하세요.</div>
   </div>
 </div>
 
-<div id="setup" class="section">
+<!-- 게임 준비 -->
+<div id="setup" class="sec">
   <div class="card">
-    <div class="card-title">게임 준비 순서</div>
+    <div class="card-ttl">게임 준비 순서</div>
     <ol class="steps">
-      <li><div class="step-num">1</div><div>파스텔 카드(1장)를 제외한 <strong>30장</strong>을 섞어 덱 장소에 둔다.</div></li>
-      <li><div class="step-num">2</div><div>파스텔 카드를 <strong>스트리밍 존</strong>에 둔다.</div></li>
-      <li><div class="step-num">3</div><div><strong>선후공</strong>을 정한다.</div></li>
-      <li><div class="step-num">4</div><div>덱에서 카드를 <strong>4장</strong> 뽑아 패로 든다.</div></li>
-      <li><div class="step-num">5</div><div>덱 위에서 <strong>5장</strong>을 시큐리티 존에 놓는다. (플레이어의 라이프)</div></li>
-      <li><div class="step-num">6</div><div>
-        <strong>멀리건</strong>: 패 전부를 덱에 돌리고 섞은 뒤 4장 재드로우 (1회 무료)
-        <div class="sub-note">추가 멀리건: 시큐리티 1장을 패로 되돌린 뒤 멀리건 실행 가능</div>
+      <li class="step-item"><div class="step-n">1</div><div>파스텔 카드(1장)를 제외한 <b style="font-weight:500">30장</b>을 잘 섞어 덱 장소에 놓는다.</div></li>
+      <li class="step-item"><div class="step-n">2</div><div>파스텔 카드를 <b style="font-weight:500">메인 스트리밍 존</b>에 놓는다.</div></li>
+      <li class="step-item"><div class="step-n">3</div><div><b style="font-weight:500">선후공</b>을 정한다. 가위바위보 승자가 선택한다.</div></li>
+      <li class="step-item"><div class="step-n">4</div><div>덱에서 카드를 <b style="font-weight:500">4장</b> 뽑아 패로 둔다.</div></li>
+      <li class="step-item"><div class="step-n">5</div><div><b style="font-weight:500">라이프 카운터</b>를 준비한다. (플레이어의 라이프)</div></li>
+      <li class="step-item"><div class="step-n">6</div><div>
+        <b style="font-weight:500">멀리건</b>: 패 전부를 덱에 돌리고 섞은 뒤 4장 재드로우 (1회 무료)
+        <div class="sub">추가 멀리건: 자신의 라이프를 1 제거한 후 멀리건 실행 가능 (패 → 덱 → 셔플 → 4장 재드로우)</div>
       </div></li>
-      <li><div class="step-num">7</div><div><strong>선공 플레이어</strong>부터 게임을 시작한다.</div></li>
+      <li class="step-item"><div class="step-n">7</div><div><b style="font-weight:500">선공 플레이어</b>부터 게임을 진행한다.</div></li>
     </ol>
   </div>
 </div>
 
-<div id="terms" class="section">
+<!-- 필드 & 용어 -->
+<div id="terms" class="sec">
   <div class="card">
-    <div class="card-title">필드 & 용어 — 항목을 눌러 확인</div>
-    <div class="glossary-grid">
-      <div class="gcard" onclick="toggleG(this)">
-        <div class="gcard-name">스트리밍 존 <span class="arrow">▼</span></div>
-        <div class="gcard-desc">메인 유닛 및 파스텔 카드를 두는 곳. 멤버가 나오면 파스텔은 파스텔 존으로 이동한다.</div>
+    <div class="card-ttl">필드 &amp; 용어 — 항목을 눌러 확인</div>
+    <div class="gls-grid">
+      <div class="gc" onclick="this.classList.toggle('op')">
+        <div class="gc-name">스트리밍 존 <span class="gc-arr">▼</span></div>
+        <div class="gc-desc">메인 유닛 및 파스텔 카드를 두는 곳. 멤버가 나오면 파스텔은 파스텔 존으로 이동한다.</div>
       </div>
-      <div class="gcard" onclick="toggleG(this)">
-        <div class="gcard-name">파스텔 존 <span class="arrow">▼</span></div>
-        <div class="gcard-desc">스트리밍 중이지 않은 파스텔 카드를 두는 곳.</div>
+      <div class="gc" onclick="this.classList.toggle('op')">
+        <div class="gc-name">파스텔 존 <span class="gc-arr">▼</span></div>
+        <div class="gc-desc">스트리밍 중이지 않은 파스텔 카드를 두는 곳.</div>
       </div>
-      <div class="gcard" onclick="toggleG(this)">
-        <div class="gcard-name">서포트 존 <span class="arrow">▼</span></div>
-        <div class="gcard-desc">서포트 카드를 사용하는 곳. 최대 3장까지 배치 가능.</div>
+      <div class="gc" onclick="this.classList.toggle('op')">
+        <div class="gc-name">서포트 존 <span class="gc-arr">▼</span></div>
+        <div class="gc-desc">서포트 카드를 사용하는 곳. 최대 3장까지 배치 가능.</div>
       </div>
-      <div class="gcard" onclick="toggleG(this)">
-        <div class="gcard-name">시큐리티 존 <span class="arrow">▼</span></div>
-        <div class="gcard-desc">자신의 라이프 포인트. 총 5장으로 구성되며 공격받으면 제거된다.</div>
+      <div class="gc" onclick="this.classList.toggle('op')">
+        <div class="gc-name">라이프 존 <span class="gc-arr">▼</span></div>
+        <div class="gc-desc">자신의 라이프를 관리하는 곳. 시작 시 라이프 카운터를 준비한다.</div>
       </div>
-      <div class="gcard" onclick="toggleG(this)">
-        <div class="gcard-name">묘지 존 <span class="arrow">▼</span></div>
-        <div class="gcard-desc">사용이 끝난 카드나 퇴장한 유닛을 두는 곳.</div>
+      <div class="gc" onclick="this.classList.toggle('op')">
+        <div class="gc-name">묘지 존 <span class="gc-arr">▼</span></div>
+        <div class="gc-desc">사용이 끝난 서포트 카드나 퇴장한 유닛을 두는 곳. (명칭 미정)</div>
       </div>
-      <div class="gcard" onclick="toggleG(this)">
-        <div class="gcard-name">그로기 <span class="arrow">▼</span></div>
-        <div class="gcard-desc">유닛이 행동 불능(눕혀진 상태)이 된 것. 배틀에서 지거나 공격받으면 그로기 상태가 된다.</div>
+      <div class="gc" onclick="this.classList.toggle('op')">
+        <div class="gc-name">그로기 <span class="gc-arr">▼</span></div>
+        <div class="gc-desc">유닛이 행동 불능(눕혀진 상태)이 된 것. 배틀에서 지거나 공격받으면 그로기 상태가 된다.</div>
       </div>
-      <div class="gcard" onclick="toggleG(this)">
-        <div class="gcard-name">스탠바이 <span class="arrow">▼</span></div>
-        <div class="gcard-desc">그로기 상태의 유닛을 다시 행동 가능(세워진 상태)으로 깨우는 것. 매 턴 스탠바이 페이즈에 실행.</div>
+      <div class="gc" onclick="this.classList.toggle('op')">
+        <div class="gc-name">스탠바이 <span class="gc-arr">▼</span></div>
+        <div class="gc-desc">그로기 상태의 유닛을 다시 행동 가능(세워진 상태)으로 깨우는 것. 매 턴 드로우 전 또는 오버랩 시 자동 적용.</div>
       </div>
-      <div class="gcard" onclick="toggleG(this)">
-        <div class="gcard-name">오버랩 <span class="arrow">▼</span></div>
-        <div class="gcard-desc">동일 의상의 멤버 위에 겹쳐 강화하는 시스템. 첫 턴, 방금 나온 멤버, 이미 오버랩한 멤버는 불가.</div>
+      <div class="gc" onclick="this.classList.toggle('op')">
+        <div class="gc-name">오버랩 <span class="gc-arr">▼</span></div>
+        <div class="gc-desc">동일 명칭의 멤버 위에 겹쳐 강화하는 시스템. (명칭 미정) 제한: 서로의 첫 턴 / 방금 나온 멤버 / 이번 턴 이미 오버랩한 멤버는 불가. 단, 그로기 멤버는 오버랩 시 즉시 스탠바이 상태가 된다.</div>
       </div>
     </div>
   </div>
 </div>
 
-<div id="turn" class="section">
+<!-- 턴 진행 -->
+<div id="turn" class="sec">
   <div class="card">
-    <div class="card-title">턴 진행 순서 — 클릭해서 펼치기</div>
-    <div class="turn-steps">
-      <div class="turn-card" onclick="toggleTurn(this)">
-        <div class="turn-header"><span class="turn-badge">①</span><span class="turn-title">드로우 페이즈</span><span class="arrow">▼</span></div>
-        <div class="turn-body">덱 위에서 카드를 <strong>1장</strong> 뽑는다.</div>
+    <div class="card-ttl">턴 진행 순서 — 클릭해서 펼치기</div>
+    <div class="turn-list">
+
+      <div class="tc" onclick="this.classList.toggle('op')">
+        <div class="tc-hd"><span class="tc-badge">①</span><span class="tc-title">드로우 페이즈</span><span class="tc-arr">▼</span></div>
+        <div class="tc-body">
+          패가 4장이 되도록 덱 위에서 카드를 뽑는다.
+          <div class="draw-visual">
+            <span class="draw-pill">패 &lt; 4장</span><span class="draw-mid">→</span><span class="draw-pill">4장이 될 때까지 드로우</span>
+          </div>
+          <div style="margin-top:8px;font-size:12px;color:var(--text2)">패가 이미 4장 이상이어도 최소 <b style="font-weight:500;color:var(--text)">1장</b>은 반드시 드로우한다.</div>
+        </div>
       </div>
-      <div class="turn-card" onclick="toggleTurn(this)">
-        <div class="turn-header"><span class="turn-badge">②</span><span class="turn-title">스탠바이 페이즈</span><span class="arrow">▼</span></div>
-        <div class="turn-body">그로기 상태의 유닛을 모두 <strong>스탠바이</strong>한다. 없다면 넘어간다.</div>
-      </div>
-      <div class="turn-card" onclick="toggleTurn(this)">
-        <div class="turn-header"><span class="turn-badge">③</span><span class="turn-title">메인 페이즈</span><span class="arrow">▼</span></div>
-        <div class="turn-body">원하는 순서대로 이하를 실행한다.
+
+      <div class="tc" onclick="this.classList.toggle('op')">
+        <div class="tc-hd"><span class="tc-badge">②</span><span class="tc-title">메인 페이즈</span><span class="tc-arr">▼</span></div>
+        <div class="tc-body">
+          아래 행동을 원하는 순서대로 실행한다.
           <ul>
-            <li>스텔 멤버를 스트리밍 존에 낸다 (파스텔은 파스텔 존으로 이동)</li>
-            <li>오버랩을 실행한다 (첫 턴·방금 나온 멤버·이미 오버랩한 멤버 불가. 그로기 멤버는 즉시 스탠드)</li>
-            <li>스트리밍을 한다 (파스텔을 멤버 옆에 나란히 놓는다)</li>
-            <li>패에서 서포트 카드를 사용한다 (서포트 존 최대 3장)</li>
+            <li>스텔 멤버를 <b>스트리밍 존</b>에 낸다 (파스텔은 파스텔 존으로 이동)</li>
+            <li><b>오버랩</b>을 실행한다 (첫 턴·방금 나온 멤버·이미 오버랩한 멤버 불가 / 그로기 멤버는 즉시 스탠바이)</li>
+            <li><b>스트리밍</b>을 한다 (파스텔을 멤버 옆에 나란히 놓는다)</li>
+            <li>패에서 <b>서포트 카드</b>를 사용한다 (서포트 존 최대 3장)</li>
+            <li>멤버 효과는 오버랩 순서대로, 각 효과 1턴 1회 사용 가능</li>
           </ul>
         </div>
       </div>
-      <div class="turn-card" onclick="toggleTurn(this)">
-        <div class="turn-header"><span class="turn-badge">④</span><span class="turn-title">배틀 페이즈</span><span class="arrow">▼</span></div>
-        <div class="turn-body">상대 스트리밍 존 메인 유닛 또는 파스텔을 지정해 공격 선언. <br>자세한 규칙은 <strong>배틀</strong> 탭에서 확인하세요.</div>
+
+      <div class="tc" onclick="this.classList.toggle('op')">
+        <div class="tc-hd"><span class="tc-badge">③</span><span class="tc-title">배틀 페이즈</span><span class="tc-arr">▼</span></div>
+        <div class="tc-body">
+          상대 스트리밍 존의 메인 유닛을 지정해 공격 선언한다.
+          <div class="warn">선공은 첫 번째 턴에 공격할 수 없다.</div>
+          <div style="margin-top:6px;font-size:12px;color:var(--text2)">자세한 규칙은 <b style="font-weight:500;color:var(--text)">배틀</b> 탭에서 확인하세요.</div>
+        </div>
       </div>
-      <div class="turn-card" onclick="toggleTurn(this)">
-        <div class="turn-header"><span class="turn-badge">⑤</span><span class="turn-title">엔드 페이즈</span><span class="arrow">▼</span></div>
-        <div class="turn-body">효과 적용을 마무리하고 <strong>턴을 넘긴다</strong>.</div>
+
+      <div class="tc" onclick="this.classList.toggle('op')">
+        <div class="tc-hd"><span class="tc-badge">④</span><span class="tc-title">엔드 페이즈</span><span class="tc-arr">▼</span></div>
+        <div class="tc-body">효과 적용을 마무리하고 턴을 상대에게 넘긴다.</div>
       </div>
+
     </div>
+    <div class="note" style="margin-top:12px">스탠바이(그로기 해제)는 드로우 페이즈 전, 혹은 오버랩 시 자동 적용됩니다.</div>
   </div>
 </div>
 
-<div id="battle" class="section">
+<!-- 배틀 -->
+<div id="battle" class="sec">
   <div class="card">
-    <div class="card-title">배틀 규칙</div>
-    <div class="battle-grid">
-      <div class="battle-rule"><strong>멤버 vs 멤버</strong>수치가 낮은 쪽이 그로기. 동수인 경우 공격 선언한 쪽이 승리한다.</div>
-      <div class="battle-rule"><strong>멤버 공격받음</strong>공격받은 멤버는 그로기 상태가 된다.</div>
-      <div class="battle-rule"><strong>파스텔 공격</strong>파스텔은 그로기에 빠지지 않는 대신, 상대 시큐리티를 1장 제거한다.</div>
-      <div class="battle-rule"><strong>스트리밍 상태 공격</strong>멤버+파스텔이 합쳐 1회 공격. 공격받으면 2체크, 직후 파스텔은 파스텔 존으로 이동.</div>
+    <div class="card-ttl">배틀 규칙</div>
+    <div class="bt-grid">
+      <div class="bt"><b>멤버 vs 멤버</b>수치가 낮은 쪽이 그로기. 동수면 공격 선언한 쪽이 승리한다.</div>
+      <div class="bt"><b>멤버가 공격받음</b>공격받은 멤버는 그로기 상태가 된다. 이때 라이프는 제거되지 않는다.</div>
+      <div class="bt"><b>그로기 멤버가 공격받음</b>라이프를 1 제거한다.</div>
+      <div class="bt"><b>파스텔 단독 공격</b>파스텔 파워는 0으로 가정. 공격받아도 그로기에 빠지지 않는 대신 라이프를 1 제거한다.</div>
+      <div class="bt"><b>스트리밍 상태 공격</b>멤버+파스텔 합산 1회 공격. 공격받으면 라이프 1 제거, 파스텔은 파스텔 존으로 이동, 멤버는 그로기.</div>
+      <div class="bt"><b>스트리밍 상태 공격받음</b>라이프 1 제거 후 파스텔은 파스텔 존으로 이동, 멤버는 즉시 그로기.</div>
     </div>
-    <div class="rule-note" style="margin-top:10px">스트리밍 상태(멤버+파스텔)에서의 공격은 단일 1회 공격으로 취급합니다.</div>
+    <div class="note" style="margin-top:10px">스트리밍(멤버+파스텔) 상태에서의 공격은 단일 1회 공격으로 취급한다.</div>
   </div>
 </div>
 
-<div id="win" class="section">
+<!-- 승리 조건 -->
+<div id="win" class="sec">
   <div class="card">
-    <div class="card-title">승리 조건</div>
-    <div class="win-cards">
-      <div class="win-card w1">
-        <div class="win-num">①</div>
-        <div class="win-label">시큐리티 0 → 메인 멤버 그로기</div>
-        <div class="win-desc">상대의 라이프가 0이 된 후, 상대 메인 스텔라 멤버를 그로기 상태로 만들면 승리.</div>
+    <div class="card-ttl">승리 조건</div>
+    <div class="win-row">
+      <div class="win w1">
+        <div class="win-n">①</div>
+        <div class="win-l">라이프 0 → 메인 멤버 그로기</div>
+        <div class="win-d">상대 라이프가 0이 된 상태에서 상대 메인 스텔라 멤버가 그로기 상태로 공격받으면 승리.</div>
       </div>
-      <div class="win-card w2">
-        <div class="win-num">②</div>
-        <div class="win-label">덱 아웃</div>
-        <div class="win-desc">상대가 덱에서 더 이상 카드를 뽑을 수 없게 되면 승리.</div>
+      <div class="win w2">
+        <div class="win-n">②</div>
+        <div class="win-l">덱 아웃</div>
+        <div class="win-d">상대가 드로우 페이즈에 덱에서 더 이상 카드를 뽑을 수 없게 되면 승리.</div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-function showTab(id){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+function go(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
 }
-function toggleG(el){el.classList.toggle('open')}
-function toggleTurn(el){el.classList.toggle('open')}
 </script>
+</body>
+</html>
